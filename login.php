@@ -19,7 +19,7 @@ if(isset($_POST['formlogin'])) {
         $userinfo = $requser->fetch();
         $_SESSION['id'] = $userinfo['id'];
         $_SESSION['email'] = $userinfo['email'];
-        header("Location: profil.php?id=".$_SESSION['id']);
+        header("Location: profile.php?id=".$_SESSION['id']);
       } else 
       {
         $error = "Wrong email or password !";
