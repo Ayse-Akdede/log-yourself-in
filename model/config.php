@@ -15,8 +15,7 @@ function openConnection() {
 }
 
 try{
-    openConnection();
-    echo "Connected";
+   $pdo=openConnection();
     
 } catch(Exception $e){
     echo "Error". $e -> getMessage();
