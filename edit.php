@@ -12,15 +12,30 @@ if(isset($_SESSION['id']))
     $requser->execute(array($_SESSION['id']));
     $user = $requser->fetch();
 
+    $validation = true;
+    $data = [];
+
+
     if(isset($_POST['newusername']) AND !empty($_POST['newusername']) AND $_POST['newusername'] != $user['username']) {
-        $newusername = htmlspecialchars($_POST['newusername']);
-        $insertname = $pdo->prepare("UPDATE student SET username = ? WHERE id = ?");
-        $insertname->execute(array($newusername, $_SESSION['id']));
+        array_push($data, htmlspecialchars($_POST['newusername']));
+    }else {
+        $validation = false;
+    }
+   
+    if(isset($_POST['newfirstname']) AND !empty($_POST['newfirstname']) AND $_POST['newfirstname'] != $user['first_name']) {
+        array_push($data, htmlspecialchars($_POST['newfirstname']));
+    }else {
+        $validation = false;
+    }
+
+    if($validation) {
+        $insertname = $pdo->prepare("UPDATE student SET username = ?, email = ?, first_name = ?, last_name = ?, linkedin = ?, github = ?  WHERE id = ?");
+        $insertname->execute(array_push($data, $_SESSION['id']));
 
         header('Location: profile.php?id='.$_SESSION['id']);
         exit;
     }
-     
+        
  ?>
 
 <html lang="en">
@@ -72,7 +87,7 @@ if(isset($_SESSION['id']))
                         </label>
                     </td>
                     <td>
-                        <input type="text" placeholder="Your new e-mail" id="newemail" name="newemail" alt="new lastname" value="<?php echo $user["last_name"];?>">
+                        <input type="text" placeholder="Your new lastname" id="newlastname" name="newlastname" alt="new lastname" value="<?php echo $user["last_name"];?>">
                     </td>
                 </tr>
                 <tr>
