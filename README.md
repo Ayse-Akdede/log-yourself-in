@@ -9,7 +9,7 @@ Made by Ayse Akede and Mia Barbir
 - [x] Log-in page
 - [x] Edit page 
 - [x] Log-out 
-- [ ] Delete 
+- [x] Delete 
 - [ ] Design
 - [ ] Website deployment
 
