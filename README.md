@@ -1,6 +1,6 @@
 # Log Yourself In 
 
-Made by Ayse Akede and Mia Barbir
+Made by Ayse Akdede and Mia Barbir
 
 
 ## Task manager: 
@@ -10,6 +10,7 @@ Made by Ayse Akede and Mia Barbir
 - [x] Edit page 
 - [x] Log-out 
 - [x] Delete 
+- [ ] MVC 
 - [ ] Design
 - [ ] Website deployment
 
