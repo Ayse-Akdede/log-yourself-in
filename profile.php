@@ -15,10 +15,12 @@ if(isset($_SESSION['id']) AND $_SESSION['id'] > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
     <title>Profile</title>
 </head>
 <body>
-    <div align="center">
+    <div class="container">
         <h1><?php echo $userinfo['username']; ?>'s Profile</h1>
             <table>
                 <tr>

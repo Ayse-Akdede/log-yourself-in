@@ -1,9 +1,69 @@
 // font-family: 'Roboto', 'Open Sans', sans-serif;
 // font-family: 'Open Sans', sans-serif;
 
-$font-stack: 'Roboto', 'Open Sans', sans-serif;
+$font-stack: 'Roboto',
+'Open Sans',
+sans-serif;
 
-body {
-    font-family: $font-stack;
-    
+* {
+    box-sizing: border-box;
+
+    body {
+        font-family: $font-stack;
+        width: 50%;
+        margin: auto;
+
+
+        div.container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            width: 100%;
+            border: 1px solid #FF8C00;
+
+            table {
+                width: 100%;
+                margin: 0 auto;
+                padding: 20px;
+
+
+                input[type=text],
+                input[type=url],
+                input[type=password],
+                input[type=mail],
+                input[type=email] {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #FF8C00;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+
+                }
+            }
+
+            input[type=submit],
+            a {
+                background-color: #FF8C00;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                display: inline-flex;
+                justify-content: space-around;
+
+                &:hover {
+                    background-color: rgba(253, 164, 54, 0.493);
+                    color: black;
+                    cursor: pointer;
+
+                }
+
+            }
+
+            a {
+                text-decoration: none;
+            }
+
+        }
+    }
 }

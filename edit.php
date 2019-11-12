@@ -68,10 +68,12 @@ if(isset($_SESSION['id']))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
     <title>Edit</title>
 </head>
 <body>
-    <div align="center">
+    <div class="container">
         <h1>Edit you profile</h1>
         <form action="" method="POST">
             <table>

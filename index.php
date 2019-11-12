@@ -70,7 +70,7 @@ if(isset($error)) {
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div align="center">
+    <div class="container">
         <h1>Sign up</h1>
         <form action="index.php" method="post">
             <div class="form-style">
