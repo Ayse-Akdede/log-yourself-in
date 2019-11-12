@@ -1,19 +1,19 @@
 <?php 
+error_reporting(-1);
+ini_set('display_errors', 'On');
     session_start();
     include("model/config.php"); 
-    if(isset($_SESSION['id'])) {
-        $requser = $pdo->prepare('SELECT * FROM student WHERE id = ?');
-        $requser->execute(array($_SESSION['id']));
-        $user = $requser->fetch();
 
-        $deleteuser = "DELETE FROM student WHERE id=?";
-        if ($pdo->query($deleteuser) === TRUE) {
+    try {
+        if(isset($_SESSION['id'])) {
+            $deleteuser = $pdo->prepare('DELETE FROM student WHERE id=?');
+            $deleteuser->execute(array($_SESSION['id']));
             echo "Account deleted successfully";
-        } else {
-            echo "Error deleting account: " . $pdo->error;
         }
-    } else {
-        echo "error";
+
+    }
+    catch (PDOException $e) {
+        echo $deleteuser . "<br>" . $e->getMessage();
     }
     exit;
 ?>

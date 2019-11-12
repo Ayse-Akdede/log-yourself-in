@@ -74,6 +74,7 @@ if(isset($_SESSION['id']) AND $_SESSION['id'] > 0) {
         if(isset($_SESSION['id']) AND $userinfo['id'] == $_SESSION['id']) {
         ?>
             <a href="edit.php">Edit your profile</a>
+            <a href="delete.php">Delete my profile</a>
             <a href="logout.php">Log Out</a>
         <?php
         }
