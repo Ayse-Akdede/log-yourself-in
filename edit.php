@@ -1,19 +1,25 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
+
 session_start();
 // se connecter à la base de donnée
 include("model/config.php"); 
 
 if(isset($_SESSION['id']))
 {
-    $requser = $pdo->prepare('SELECT * FROM student WHERE id =?');
+    $requser = $pdo->prepare('SELECT * FROM student WHERE id = ?');
     $requser->execute(array($_SESSION['id']));
     $user = $requser->fetch();
+
     if(isset($_POST['newusername']) AND !empty($_POST['newusername']) AND $_POST['newusername'] != $user['username']) {
         $newusername = htmlspecialchars($_POST['newusername']);
-        $insertname = $pdo->prepare("UPDATE membres SET pseudo = ? WHERE id = ?");
+        $insertname = $pdo->prepare("UPDATE student SET username = ? WHERE id = ?");
         $insertname->execute(array($newusername, $_SESSION['id']));
+
         header('Location: profile.php?id='.$_SESSION['id']);
-     }
+        exit;
+    }
      
  ?>
 
@@ -76,7 +82,7 @@ if(isset($_SESSION['id']))
                         </label>
                     </td>
                     <td>
-                        <input type="url" placeholder="Your new linkedin" id="newlinkedin" name="newlinkedin" alt="new linkedin" value="<?php echo $userinfo["linkedin"];?>">
+                        <input type="url" placeholder="Your new linkedin" id="newlinkedin" name="newlinkedin" alt="new linkedin" value="<?php echo $user["linkedin"];?>">
                     </td>
                 </tr>
                 <tr>
@@ -117,7 +123,7 @@ if(isset($_SESSION['id']))
         </form>
           
         <?php
-        if(isset($_SESSION['id']) AND $userinfo['id'] == $_SESSION['id']) {
+        if(isset($_SESSION['id'])) {
         ?>
 
         <a href="#">Editer mon profile</a>

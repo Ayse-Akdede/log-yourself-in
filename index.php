@@ -1,5 +1,62 @@
 <?php 
+    session_start();
     require 'model/config.php';
+
+    //openConnection();
+
+    if(isset($_POST['formregistration'])) {
+
+        $username = htmlspecialchars($_POST['username']);
+        $email = htmlspecialchars($_POST['email']);
+        $password = sha1($_POST['password']);
+
+        if(!empty($_POST['username']) AND !empty($_POST['email']) AND !empty($_POST['password'])){
+
+            $usernamelenght = strlen($username);
+
+            if($usernamelenght <= 255){
+                $searcheusername = $pdo->prepare("SELECT * FROM student WHERE username = ? ");
+                $searcheusername->execute(array($username));
+                $existusername = $searcheusername->rowCount();
+
+                if($existusername == 0) {
+                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        $searchemail = $pdo->prepare("SELECT * FROM student WHERE email = ? ");
+                        $searchemail->execute(array($mail));
+                        $existemail = $searchemail->rowCount();
+
+                        if($existemail == 0) {
+
+                            $insertstudent = $pdo->prepare("INSERT INTO student (username, email, `password`) VALUES (?, ?, ?)");
+                            $insertstudent->execute(array($username, $email, $password));
+
+                            $_SESSION['accountcreated'] = "Your account has been succesfully created.";
+                            header('Location: login.php');
+                            exit;
+                        }
+                        else {
+                            $error = "This email address has already been used.";
+                        }
+                    }
+                    else {
+                        $error = "Your email address is not valid.";
+                    }
+                }
+                else {
+                    $error = "This username has already been used.";
+                }
+            } else {
+                $error = "Your username can't be longer then 255 characters.";
+            }
+        } else {
+            $error = "All the fields must be completed.";
+        }
+    }
+?>
+<?php
+if(isset($error)) {
+    echo '<font color="red">'.$error.'</font>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,56 +107,7 @@
             <input type="submit" name="formregistration" value="Sign Up">
         </form>
 
-        <?php 
-             openConnection();
-             if(isset($_POST['formregistration'])) {
-                $username = htmlspecialchars($_POST['username']);
-                $email = htmlspecialchars($_POST['email']);
-                $password = sha1($_POST['password']);
-
-                if(!empty($_POST['username']) AND !empty($_POST['email']) AND !empty($_POST['password'])){
-                    $usernamelenght = strlen($username);
-                    if($usernamelenght <= 255){
-                        $searcheusername = $pdo->prepare("SELECT * FROM student WHERE username = ? ");
-                        $searcheusername->execute(array($username));
-                        $existusername = $searcheusername->rowCount();
-
-                        if($existusername == 0) {
-                            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                $searchemail = $pdo->prepare("SELECT * FROM student WHERE email = ? ");
-                                $searchemail->execute(array($mail));
-                                $existemail = $searchemail->rowCount();
-    
-                                if($existemail == 0) {
-                                    $insertstudent = $pdo->prepare("INSERT INTO student (username, email, password) VALUES (?, ?, ?)");
-                                    $insertstudent->execute(array($username, $email, $password));
-                                    $_SESSION['accountcreated'] = "Your account has been succesfully created.";
-                                    header('Location: index.php');
-                                }
-                                else {
-                                    $error = "This email address has already been used.";
-                                }
-                           }
-                           else {
-                               $error = "Your email address is not valid.";
-                           }
-                        }
-                        else {
-                            $error = "This username has already been used.";
-                        }
-                    } else {
-                       $error = "Your username can't be longer then 255 characters.";
-                    }
-                } else {
-                    $error = "All the fields must be completed.";
-                }
-             }
-        ?>
-        <?php
-            if(isset($error)) {
-                echo '<font color="red">'.$error.'</font>';
-            }
-        ?>
+        
     </div>
 </body>
 </html>

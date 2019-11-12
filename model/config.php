@@ -1,5 +1,4 @@
 <?php
-
 function openConnection() {
 	// Try to figure out what these should be for you
 	$dbhost = "remotemysql.com";
