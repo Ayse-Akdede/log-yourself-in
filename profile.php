@@ -3,8 +3,8 @@ session_start();
 // se connecter à la base de donnée
 include("model/config.php"); 
 
-if(isset($_GET['id']) AND $_GET['id'] > 0) {
-    $getid = intval($_GET['id']);
+if(isset($_SESSION['id']) AND $_SESSION['id'] > 0) {
+    $getid = intval($_SESSION['id']);
     $requser = $pdo->prepare('SELECT * FROM student WHERE id = ?');
     $requser->execute(array($getid));
     $userinfo = $requser->fetch();
