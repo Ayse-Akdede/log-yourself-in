@@ -12,10 +12,13 @@ Made by Ayse Akdede and Mia Barbir
 - [x] Delete 
 - [ ] MVC 
 - [ ] Design
-- [ ] Website deployment
+- [x] Website deployment
 
 ## Technologies used on this project : 
 - PHP 
 - MySQL
 - HTML 
 - CSS/SCSS
+
+## Website deployment 
+<https://log-yourself-in.000webhostapp.com>
