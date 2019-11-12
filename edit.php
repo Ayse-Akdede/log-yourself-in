@@ -12,30 +12,62 @@ if(isset($_SESSION['id']))
     $requser->execute(array($_SESSION['id']));
     $user = $requser->fetch();
 
-    $validation = true;
-    $data = [];
-
-
     if(isset($_POST['newusername']) AND !empty($_POST['newusername']) AND $_POST['newusername'] != $user['username']) {
-        array_push($data, htmlspecialchars($_POST['newusername']));
-    }else {
-        $validation = false;
-    }
-   
-    if(isset($_POST['newfirstname']) AND !empty($_POST['newfirstname']) AND $_POST['newfirstname'] != $user['first_name']) {
-        array_push($data, htmlspecialchars($_POST['newfirstname']));
-    }else {
-        $validation = false;
-    }
-
-    if($validation) {
-        $insertname = $pdo->prepare("UPDATE student SET username = ?, email = ?, first_name = ?, last_name = ?, linkedin = ?, github = ?  WHERE id = ?");
-        $insertname->execute(array_push($data, $_SESSION['id']));
-
+        $newusername = htmlspecialchars($_POST['newusername']);
+        $insertuser = $pdo->prepare("UPDATE student SET username = ? WHERE id = ?");
+        $insertuser->execute(array($newusername, $_SESSION['id']));
         header('Location: profile.php?id='.$_SESSION['id']);
         exit;
     }
+    if(isset($_POST['newemail']) AND !empty($_POST['newemail']) AND $_POST['newemail'] != $user['email']) {
+        $newemail = htmlspecialchars($_POST['newemail']);
+        $insertemail = $pdo->prepare("UPDATE student SET email = ? WHERE id = ?");
+        $insertemail->execute(array($newemail, $_SESSION['id']));
+        header('Location: profile.php?id='.$_SESSION['id']);
+        exit;
+    }
+    if(isset($_POST['newfirstname']) AND !empty($_POST['newfirstname']) AND $_POST['newfirstname'] != $user['first_name']) {
+        $newfirstname = htmlspecialchars($_POST['newfirstname']);
+        $insertfirst = $pdo->prepare("UPDATE student SET first_name = ? WHERE id = ?");
+        $insertfirst->execute(array($newfirstname, $_SESSION['id']));
+        header('Location: profile.php?id='.$_SESSION['id']);
+        exit;
+    }
+    if(isset($_POST['newlastname']) AND !empty($_POST['newlastname']) AND $_POST['newlastname'] != $user['last_name']) {
+        $newlastname = htmlspecialchars($_POST['newlastname']);
+        $insertlast = $pdo->prepare("UPDATE student SET last_name = ? WHERE id = ?");
+        $insertlast->execute(array($newlastname, $_SESSION['id']));
+        header('Location: profile.php?id='.$_SESSION['id']);
+        exit;
+    }
+    if(isset($_POST['newlinkedin']) AND !empty($_POST['newlinkedin']) AND $_POST['newlinkedin'] != $user['linkedin']) {
+        $newlinkedin = htmlspecialchars($_POST['newlinkedin']);
+        $insertlinked = $pdo->prepare("UPDATE student SET linkedin = ? WHERE id = ?");
+        $insertlinked->execute(array($newlinkedin, $_SESSION['id']));
+        header('Location: profile.php?id='.$_SESSION['id']);
+        exit;
+    }
+    if(isset($_POST['newgithub']) AND !empty($_POST['newgithub']) AND $_POST['newgithub'] != $user['github']) {
+        $newgithub = htmlspecialchars($_POST['newgithub']);
+        $insertgit = $pdo->prepare("UPDATE student SET github = ? WHERE id = ?");
+        $insertgit->execute(array($newgithub, $_SESSION['id']));
+        header('Location: profile.php?id='.$_SESSION['id']);
+        exit;
+    }
+    if ($_POST['newpw1'] == $_POST['newpw2']) {
+        $newpw1 = sha1($_POST['newpw1']);
+        $newpw1 = sha1($_POST['newpw2']);
+        if(isset($_POST['newpw1']) AND !empty($_POST['newpw1']) AND $_POST['newpw1'] != $user['password']) {
         
+        $insertpwone = $pdo->prepare("UPDATE student SET password = ? WHERE id = ?");
+        $insertpwone->execute(array($newpw1, $_SESSION['id']));
+        header('Location: profile.php?id='.$_SESSION['id']);
+        exit;
+        }   
+    } else {
+        $error = "password not same !";
+    }
+  
  ?>
 
 <html lang="en">
@@ -136,8 +168,17 @@ if(isset($_SESSION['id']))
             <br>
             <input type="submit" value="Update my profile">
         </form>
+
+
           
         <?php
+
+
+        if (isset($error))
+        {
+            echo $error;
+        }
+
         if(isset($_SESSION['id'])) {
         ?>
 
